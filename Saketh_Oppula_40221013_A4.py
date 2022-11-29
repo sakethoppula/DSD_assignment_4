@@ -82,8 +82,7 @@ def air_flights_diverted_flights(flights: DataFrame) -> int:
     :param flights: Spark DataFrame of the flights CSV file.
     :return: The number of diverted flights between 20-30 Nov. 2021.
     """
-    flights_selected = flights.select(col("Airline"), datediff(to_date(lit("2021-11-20")), col("FlightDate")).alias("datediff"), col("Diverted"), )
-    flights_filtered = flights_selected.filter((flights_selected.datediff >= 0) & (flights_selected.datediff <= 10) & (flights_selected.Diverted == True))
+    flights_filtered = flights.filter((flights.FlightDate >= to_date(lit("2021-11-20"))) & (flights.FlightDate <= to_date(lit("2021-11-30"))) & (flights.Diverted == True))
     # flights_sorted.show()
 
     return flights_filtered.count()
